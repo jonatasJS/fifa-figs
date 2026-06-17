@@ -57,18 +57,18 @@ pnpm add prisma @prisma/client bcryptjs jsonwebtoken axios cloudinary mercadopag
 O arquivo `.env` já está configurado com suas credenciais. Verifique se está correto:
 
 ```env
-DATABASE_URL=postgresql://neondb_owner:npg_AXjRLf50rEYe@ep-dark-lab-acazk7g7-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-JWT_SECRET=94cf3a67ed5018c0f65bf55dc537dcf644312455d6f1efccef7b24c8ad42df6686eb8ce53f3b0ed53a5484b62c46a3abb5dba06a44b6156258fc78f49acc2f0f
+DATABASE_URL=postgresql://{user}:{pass}@{server}/{db}?sslmode=require&channel_binding=require
+JWT_SECRET=94cf3a67ed5...
 FRONTEND_URL=http://localhost:3000
-MERCADO_PAGO_ACCESS_TOKEN=APP_USR-5783327644288701-060100-6bfe8cd30254dc636c79990301046927-268439880
-MERCADO_PAGO_PUBLIC_KEY=APP_USR-ccd2fc29-eca6-41d3-b12b-5a480ea9be16
+MERCADO_PAGO_ACCESS_TOKEN=APP_USR-5455633...
+MERCADO_PAGO_PUBLIC_KEY=APP_USR-Aae...
 WEBHOOK_URL=/api/checkout/webhook
-VAPID_PUBLIC_KEY=BHdFHuv8WjXQu2xP_CzvUerT_A5JzfKwh9KonrBleNgTjm7l2JJJ_8rQWLME0gbtKXJBxa-tXPugRRloHkGDWWg
-VAPID_PRIVATE_KEY=jkGFVEhIlNb22NlPuL_HxWFzr2-xcFQ4WxuXeubgT2k
-VAPID_EMAIL=mailto:soaresjonatas398@gmail.com
-CLOUDINARY_CLOUD_NAME=fifa-figs
-CLOUDINARY_API_KEY=912744145823723
-CLOUDINARY_API_SECRET=qS-a_WuUB8vrsz2cqTv1r8eoUKE
+VAPID_PUBLIC_KEY=BHvFhuv8Wj...
+VAPID_PRIVATE_KEY=xcFQ4Wxu...
+VAPID_EMAIL=mailto:email@email.com
+CLOUDINARY_CLOUD_NAME=name646j...
+CLOUDINARY_API_KEY=4582372...
+CLOUDINARY_API_SECRET=rsz2c...
 ```
 
 ### 3. Configurar Banco de Dados
