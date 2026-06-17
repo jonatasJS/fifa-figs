@@ -1,5 +1,5 @@
 const { PrismaClient } = require('@prisma/client')
-process.env.DATABASE_URL = "postgresql://neondb_owner:b9nN1fVXZQlh@ep-dark-lab-acazk7g7-pooler.sa-east-1.aws.neon.tech/neondb?sslmode=require"
+process.env.DATABASE_URL = ""
 const prisma = new PrismaClient({ url: process.env.DATABASE_URL })
 
 async function main() {
