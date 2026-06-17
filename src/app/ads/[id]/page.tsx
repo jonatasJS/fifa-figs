@@ -65,8 +65,9 @@ export default function AdDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
-    fetchAd()
-  }, [params.id])
+    if (!params.id) return;
+    fetchAd();
+  }, [params.id]);
 
   const fetchAd = async () => {
     try {

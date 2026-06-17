@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b; /* Very dark slate, almost black */
+  --foreground: #fafafa;
+  --primary-wc: #ff0055; /* Vibrant pink/magenta used in 2026 branding */
+  --secondary-wc: #00ffcc; /* Cyan/Teal */
+  --tertiary-wc: #cc00ff; /* Purple */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-wc-primary: var(--primary-wc);
+  --color-wc-secondary: var(--secondary-wc);
+  --color-wc-tertiary: var(--tertiary-wc);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Background Mesh / Pattern */
+.bg-mesh {
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 0, 85, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 255, 204, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(204, 0, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(0, 204, 255, 0.1) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-panel {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }

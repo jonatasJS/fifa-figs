@@ -1,265 +1,222 @@
+'use client'
+
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { 
   ShoppingCart, 
   ArrowLeftRight, 
   TrendingUp, 
   Shield,
   Smartphone,
-  Zap
+  Zap,
+  Globe,
+  Trophy
 } from 'lucide-react'
+
+// Variáveis de animação para stagger
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+}
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen w-full overflow-hidden text-[var(--foreground)] pt-16">
+      
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Complete Seu Álbum da FIFA
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8">
-            Compre, venda e troque figurinhas com colecionadores de todo o Brasil. 
-            Contato direto via WhatsApp, sem intermediários.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <section className="relative w-full py-20 flex flex-col items-center justify-center min-h-[80vh]">
+        {/* Background Image da Copa */}
+        <div className="absolute inset-0 z-[-1] opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--background)] z-10" />
+          <img 
+            src="https://images.unsplash.com/photo-1518605368461-1e1e38ce8058?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+            alt="Estádio de Futebol Copa" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <motion.div 
+          className="text-center max-w-5xl mx-auto px-4 relative z-10"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 border-[var(--primary-wc)] border-opacity-50">
+            <Trophy className="w-5 h-5 text-[var(--primary-wc)]" />
+            <span className="text-sm font-semibold tracking-wider text-[var(--secondary-wc)]">A CAMINHO DA COPA 2026</span>
+          </motion.div>
+          
+          <motion.h1 variants={itemVariants} className="text-5xl md:text-8xl font-black mb-6 tracking-tight">
+            <span className="bg-gradient-to-r from-[var(--primary-wc)] via-white to-[var(--secondary-wc)] bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,0,85,0.5)]">
+              Complete Seu Álbum
+            </span>
+            <br />
+            da FIFA
+          </motion.h1>
+          
+          <motion.p variants={itemVariants} className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto font-light">
+            O marketplace definitivo para colecionadores. Negocie diretamente, sem taxas ocultas, e prepare-se para o maior evento do mundo.
+          </motion.p>
+          
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
               href="/ads"
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-lg font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-lg hover:shadow-xl"
+              className="group relative px-8 py-4 bg-gradient-to-r from-[var(--primary-wc)] to-[var(--tertiary-wc)] text-white text-lg font-bold rounded-xl overflow-hidden shadow-[0_0_30px_rgba(204,0,255,0.4)] hover:shadow-[0_0_40px_rgba(255,0,85,0.6)] transition-all duration-300"
             >
-              Ver Anúncios
+              <span className="relative z-10 flex items-center gap-2">
+                Ver Anúncios <Globe className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+              </span>
+              <div className="absolute inset-0 h-full w-full bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
             </Link>
             <Link
               href="/register"
-              className="px-8 py-4 bg-white text-blue-600 text-lg font-semibold rounded-xl border-2 border-blue-600 hover:bg-blue-50 transition-colors"
+              className="px-8 py-4 glass text-[var(--foreground)] hover:text-[var(--secondary-wc)] hover:border-[var(--secondary-wc)] text-lg font-bold rounded-xl transition-all duration-300"
             >
               Começar Agora
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Features Section */}
-      <section id="como-funciona" className="container mx-auto px-4 py-20">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-          Como Funciona
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <FeatureCard
-            icon={<ShoppingCart className="w-12 h-12" />}
-            title="Compre e Venda"
-            description="Encontre as figurinhas que falta no seu álbum ou venda as repetidas. 
-            Negocie diretamente com outros colecionadores."
-          />
-          <FeatureCard
-            icon={<ArrowLeftRight className="w-12 h-12" />}
-            title="Troque Figurinhas"
-            description="Prefere trocar? Encontre pessoas com as figurinhas que você precisa 
-            e faça trocas justas."
-          />
-          <FeatureCard
-            icon={<Smartphone className="w-12 h-12" />}
-            title="Contato via WhatsApp"
-            description="Toda negociação é feita diretamente pelo WhatsApp. 
-            Rápido, fácil e seguro."
-          />
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="bg-white py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
-            Por que usar o FIFA Figs?
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            <BenefitCard
-              icon={<Zap className="w-8 h-8" />}
-              title="Rápido e Fácil"
-              description="Crie anúncios em segundos e conecte-se com compradores instantaneamente."
+      <section className="py-24 relative z-10">
+        <motion.div 
+          className="container mx-auto px-4 max-w-6xl"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
+          <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl font-bold text-center mb-16 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+            Como Funciona
+          </motion.h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <FeatureCard
+              icon={<ShoppingCart className="w-10 h-10" />}
+              title="Compre e Venda"
+              description="Encontre figurinhas raras ou venda suas repetidas com lucro. O mercado em suas mãos."
+              color="var(--primary-wc)"
             />
-            <BenefitCard
-              icon={<Shield className="w-8 h-8" />}
-              title="Sem Intermediários"
-              description="Negocie direto com o vendedor. Taxas menores para ambos."
+            <FeatureCard
+              icon={<ArrowLeftRight className="w-10 h-10" />}
+              title="Trocas Diretas"
+              description="A magia de colecionar: troque 1x1 com pessoas da sua região de forma segura."
+              color="var(--secondary-wc)"
             />
-            <BenefitCard
-              icon={<TrendingUp className="w-8 h-8" />}
-              title="Engaje seus Anúncios"
-              description="Planos acessíveis para destacar seus anúncios e vender mais rápido."
-            />
-            <BenefitCard
-              icon={<Smartphone className="w-8 h-8" />}
-              title="100% Mobile"
-              description="Use no seu celular, tablet ou computador. Onde estiver."
+            <FeatureCard
+              icon={<Smartphone className="w-10 h-10" />}
+              title="Via WhatsApp"
+              description="Negociações instantâneas direto no zap. Agilidade máxima sem intermediários."
+              color="var(--tertiary-wc)"
             />
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Plans Section */}
-      <section id="planos" className="container mx-auto px-4 py-20">
-        <h2 className="text-4xl font-bold text-center mb-4 text-gray-800">
-          Planos de Engajamento
-        </h2>
-        <p className="text-center text-gray-600 mb-12 text-lg">
-          Destaque seus anúncios e venda mais rápido
-        </p>
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <PlanCard
-            name="Starter"
-            price="R$ 9,90"
-            duration="7 dias"
-            features={[
-              'Destaque por 7 dias',
-              'Primeiros resultados',
-              'Suporte por email',
-            ]}
-            popular={false}
-          />
-          <PlanCard
-            name="Pro"
-            price="R$ 19,90"
-            duration="15 dias"
-            features={[
-              'Destaque por 15 dias',
-              'Badge de destaque',
-              'Suporte prioritário',
-              'Aparece no topo',
-            ]}
-            popular={true}
-          />
-          <PlanCard
-            name="Premium"
-            price="R$ 39,90"
-            duration="30 dias"
-            features={[
-              'Destaque por 30 dias',
-              'Badge premium',
-              'Suporte 24/7',
-              'Análises avançadas',
-              'Sempre no topo',
-            ]}
-            popular={false}
-          />
-        </div>
+      {/* Showcase Section */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-[var(--background)] skew-y-3 z-[-1] border-y border-[rgba(255,255,255,0.05)] shadow-[0_0_50px_rgba(0,255,204,0.1)]" />
+        
+        <motion.div 
+          className="container mx-auto px-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
+          <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+            Por que usar o FIFA Figs?
+          </motion.h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <BenefitCard icon={<Zap />} title="Velocidade" desc="Crie anúncios num piscar de olhos." />
+            <BenefitCard icon={<Shield />} title="Segurança" desc="Perfis verificados e comunidade engajada." />
+            <BenefitCard icon={<TrendingUp />} title="Destaque" desc="Impulsione seus anúncios para o topo." />
+            <BenefitCard icon={<Globe />} title="Global" desc="Acesso a colecionadores do Brasil inteiro." />
+          </div>
+        </motion.div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Pronto para Começar?
+      <section className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 z-[-1]">
+           <div className="absolute inset-0 bg-black/60 z-10 backdrop-blur-sm" />
+           <img 
+             src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+             alt="Celebração Futebol" 
+             className="w-full h-full object-cover"
+           />
+        </div>
+        <motion.div 
+          className="container mx-auto px-4 text-center glass-panel max-w-4xl py-16"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            O Apito Inicial Vai Soar!
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Cadastre-se agora e comece a comprar, vender e trocar suas figurinhas da FIFA.
+          <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+            Junte-se à maior comunidade de colecionadores do Brasil e não fique com espaços vazios no seu álbum.
           </p>
           <Link
             href="/register"
-            className="px-8 py-4 bg-white text-blue-600 text-lg font-semibold rounded-xl hover:bg-gray-100 transition-colors shadow-lg"
+            className="inline-block px-10 py-5 bg-gradient-to-r from-[var(--secondary-wc)] to-blue-500 text-black text-xl font-bold rounded-xl hover:shadow-[0_0_30px_rgba(0,255,204,0.6)] hover:scale-105 transition-all duration-300"
           >
             Criar Conta Grátis
           </Link>
-        </div>
+        </motion.div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">F</span>
-                </div>
-                <span className="text-xl font-bold">FIFA Figs</span>
-              </div>
-              <p className="text-gray-400">
-                A melhor plataforma para comprar, vender e trocar figurinhas da FIFA.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Links</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/ads" className="hover:text-white transition-colors">Anúncios</Link></li>
-                <li><Link href="#planos" className="hover:text-white transition-colors">Planos</Link></li>
-                <li><Link href="/login" className="hover:text-white transition-colors">Entrar</Link></li>
-                <li><Link href="/register" className="hover:text-white transition-colors">Cadastrar</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link href="/terms" className="hover:text-white transition-colors">Termos de Uso</Link></li>
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacidade</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2026 FIFA Figs. Todos os direitos reservados.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({ icon, title, description, color }: { icon: React.ReactNode, title: string, description: string, color: string }) {
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
-      <div className="text-blue-600 mb-4">{icon}</div>
-      <h3 className="text-2xl font-bold mb-3 text-gray-800">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-    </div>
-  )
-}
-
-function BenefitCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
-  return (
-    <div className="text-center p-6">
-      <div className="text-purple-600 mb-4 flex justify-center">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-    </div>
-  )
-}
-
-function PlanCard({ name, price, duration, features, popular }: { 
-  name: string, 
-  price: string, 
-  duration: string,
-  features: string[],
-  popular: boolean
-}) {
-  return (
-    <div className={`bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border-2 ${
-      popular ? 'border-purple-500 relative' : 'border-gray-100'
-    }`}>
-      {popular && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
-            Popular
-          </span>
-        </div>
-      )}
-      <h3 className="text-2xl font-bold text-gray-800 mb-2">{name}</h3>
-      <div className="text-4xl font-bold text-blue-600 mb-2">{price}</div>
-      <p className="text-gray-500 mb-6">{duration}</p>
-      <ul className="space-y-3 mb-8">
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-center gap-2 text-gray-600">
-            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            {feature}
-          </li>
-        ))}
-      </ul>
-      <Link
-        href="/register"
-        className="block w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center font-semibold rounded-lg hover:opacity-90 transition-opacity"
+    <motion.div 
+      variants={itemVariants}
+      whileHover={{ y: -10, scale: 1.02 }}
+      className="glass-panel p-8 text-center relative overflow-hidden group"
+    >
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" 
+        style={{ background: `radial-gradient(circle at center, ${color} 0%, transparent 70%)` }}
+      />
+      <div 
+        className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-6 shadow-lg bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] transition-transform duration-500 group-hover:rotate-12"
+        style={{ color: color, textShadow: `0 0 10px ${color}` }}
       >
-        Começar Agora
-      </Link>
-    </div>
+        {icon}
+      </div>
+      <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-transparent group-hover:bg-clip-text transition-colors duration-300" style={{ backgroundImage: `linear-gradient(to right, white, ${color})` }}>
+        {title}
+      </h3>
+      <p className="text-gray-400 font-light leading-relaxed">{description}</p>
+    </motion.div>
+  )
+}
+
+function BenefitCard({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) {
+  return (
+    <motion.div 
+      variants={itemVariants}
+      className="p-6 text-center glass rounded-2xl hover:bg-[rgba(255,255,255,0.1)] transition-colors cursor-default"
+    >
+      <div className="text-[var(--primary-wc)] mb-4 flex justify-center drop-shadow-[0_0_5px_rgba(255,0,85,0.5)]">
+        {icon}
+      </div>
+      <h3 className="text-xl font-bold mb-2 text-white">{title}</h3>
+      <p className="text-sm text-gray-400">{desc}</p>
+    </motion.div>
   )
 }

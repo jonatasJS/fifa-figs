@@ -17,11 +17,12 @@ const adUpdateSchema = z.object({
 // GET - Buscar anúncio por ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const ad = await prisma.ad.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         user: {
           select: {
@@ -50,9 +51,10 @@ export async function GET(
     }
 
     // Incrementar visualização
-    await prisma.adMetrics.update({
+    await prisma.adMetrics.upsert({
       where: { adId: ad.id },
-      data: { views: { increment: 1 } },
+      update: { views: { increment: 1 } },
+      create: { adId: ad.id, views: 1 },
     })
 
     return NextResponse.json({ ad })
@@ -68,8 +70,9 @@ export async function GET(
 // PUT - Atualizar anúncio
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = getTokenFromRequest(request)
     if (!token) {
