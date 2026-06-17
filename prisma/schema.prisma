@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  phone         String?
+  whatsapp      String?
+  password      String
+  avatar        String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  ads           Ad[]
+  purchases     Purchase[]
+  adEngagements AdEngagement[]
+}
+
+model Ad {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  price       Float?
+  location    String?
+  condition   String      // NOVA, USADA, TROCA
+  images      String[]    // Array de URLs das imagens
+  whatsapp    String
+  status      String      @default("ACTIVE") // ACTIVE, PAUSED, EXPIRED
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  metrics     AdMetrics?
+  engagements AdEngagement[]
+}
+
+model AdMetrics {
+  id           String   @id @default(cuid())
+  adId         String   @unique
+  ad           Ad       @relation(fields: [adId], references: [id], onDelete: Cascade)
+  views        Int      @default(0)
+  whatsappClicks Int    @default(0)
+  favorites    Int      @default(0)
+  shares       Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Plan {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  duration    Int      // em dias
+  features    String[] // Array de features do plano
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  purchases   Purchase[]
+}
+
+model Purchase {
+  id              String      @id @default(cuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  planId          String
+  plan            Plan        @relation(fields: [planId], references: [id])
+  status          String      @default("PENDING") // PENDING, APPROVED, REJECTED, CANCELLED
+  paymentId       String?     // ID do pagamento no Mercado Pago
+  paymentMethod   String?     // PIX, CREDIT_CARD, DEBIT_CARD
+  approvedAt      DateTime?
+  expiresAt       DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  adEngagements   AdEngagement[]
+}
+
+model AdEngagement {
+  id          String    @id @default(cuid())
+  adId        String
+  ad          Ad        @relation(fields: [adId], references: [id])
+  purchaseId  String
+  purchase    Purchase  @relation(fields: [purchaseId], references: [id])
+  startDate   DateTime  @default(now())
+  endDate     DateTime
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  paymentId     String   @unique // ID do Mercado Pago
+  status        String
+  amount        Float
+  paymentMethod String?
+  approvedAt    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
